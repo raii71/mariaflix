@@ -11,13 +11,13 @@ body {
 
 .app {
   padding-bottom: 70px;
-  /* height: 100vh;
+  /* height: 160vh;
   overflow-y: auto;
 
   scrollbar-width: none;
   -ms-overflow-style: none; */
 }
 
-.app::-webkit-scrollbar {
+/* .app::-webkit-scrollbar {
   display: none;
-}
+} */
