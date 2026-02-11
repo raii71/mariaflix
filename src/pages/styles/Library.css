@@ -1,0 +1,30 @@
+.library-page {
+  padding: 20px 16px 80px;
+  min-height: 100vh;
+  color: white;
+}
+
+.library-title {
+  margin-bottom: 16px;
+}
+
+.library-section {
+  margin-bottom: 30px;
+}
+
+.library-section h3 {
+  font-size: 16px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.library-row {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+}
+
+.library-row::-webkit-scrollbar {
+  display: none;
+}

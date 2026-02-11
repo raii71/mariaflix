@@ -9,12 +9,10 @@ export default function MovieRow({ title, movies, showProgress }) {
       <motion.div
         className="movie-row-list"
         style={{
-          overflow: "hidden",
-          cursor: movies.length > 3 ? "grab" : "default"
+          overflow: "hidden"
         }}
         drag={movies.length > 3 ? "x" : false}
         dragConstraints={{ left: -(movies.length - 3) * 130, right: 0 }}
-        whileTap={{ cursor: "grabbing" }}
       >
         {movies.map((movie, idx) => (
           <div
