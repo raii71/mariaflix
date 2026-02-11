@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Search from "./pages/Search";
 import Library from "./pages/Library";
@@ -11,10 +11,14 @@ export default function App() {
     <BrowserRouter>
       <div className="app">
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Navigate to="/mariaflix/" replace />} />
+
+          <Route path="/mariaflix" element={<Home />} />
           <Route path="/search" element={<Search />} />
           <Route path="/library" element={<Library />} />
           <Route path="/profile" element={<Profile />} />
+
+          <Route path="*" element={<Navigate to="/mariaflix/" replace />} />
         </Routes>
         <BottomNav />
       </div>

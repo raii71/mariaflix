@@ -1,13 +1,22 @@
 import { useRef, useState } from "react";
 import { motion, useMotionValue, animate } from "framer-motion";
-import { useRef, useState } from "react";
 import { ClipLoader } from "react-spinners";
 
 import HeroBanner from "../components/HeroBanner";
 import GenreChips from "../components/GenreChips";
 import MovieRow from "../components/MovieRow";
+import "./styles/Home.css";
 
-import "/styles/Home.css";
+import poster1 from "../assets/posters/Roane_And_The_Beast_2.png";
+import poster2 from "../assets/posters/A_Moment_To_Maria.png";
+import poster3 from "../assets/posters/It_Ends_With_Roane.png";
+import poster4 from "../assets/posters/My_Sassy_Roane.png";
+import poster5 from "../assets/posters/The_Fault_In_Roane's_Stars.png";
+import poster6 from "../assets/posters/365_Days_With_Roane.png";
+import poster7 from "../assets/posters/Shark_Attack.png";
+import poster8 from "../assets/posters/Roane's_Execution.png";
+import poster9 from "../assets/posters/Train_To_Roane.png";
+import poster10 from "../assets/posters/Finding_Roane.png";
 
 const PULL_DISTANCE = 100;
 
