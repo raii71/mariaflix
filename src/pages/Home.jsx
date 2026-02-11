@@ -18,15 +18,17 @@ import poster8 from "../assets/posters/Roane's_Execution.png";
 import poster9 from "../assets/posters/Train_To_Roane.png";
 import poster10 from "../assets/posters/Finding_Roane.png";
 
-const PULL_DISTANCE = 100;
-
 export default function Home() {
-  const homeRef = useRef(null);
-  const y = useMotionValue(0);
+  const scrollRef = useRef(null);
+  const y = useMotionValue(0); // vertical motion for pull indicator
   const [refreshing, setRefreshing] = useState(false);
-  const [canPull, setCanPull] = useState(true);
+  const [touchStart, setTouchStart] = useState(0);
+  const [refreshKey, setRefreshKey] = useState(0); // key to trigger animation
 
-  // Hard-coded movies (unchanged)
+  const PULL_THRESHOLD = 80;
+  const REFRESH_DURATION = 1500; // ms
+
+  // Hard-coded movies
   const continueWatching = [
     { id: "cw-1", poster: poster1, progress: 30 },
     { id: "cw-2", poster: poster2, progress: 60 },
@@ -51,74 +53,72 @@ export default function Home() {
     { id: "nr-4", poster: poster4 },
   ];
 
-  // Enable pull-to-refresh only when scrolled to top
-  const handleScroll = () => {
-    if (!homeRef.current) return;
-    setCanPull(homeRef.current.scrollTop === 0);
+  // Touch handlers
+  const handleTouchStart = (e) => {
+    if (scrollRef.current.scrollTop === 0 && !refreshing) {
+      setTouchStart(e.touches[0].clientY);
+    }
   };
 
-  const handleDragEnd = (_, info) => {
-    if (!canPull) return;
+  const handleTouchMove = (e) => {
+    if (touchStart === 0) return;
+    let distance = e.touches[0].clientY - touchStart;
+    if (distance > 0) {
+      e.preventDefault();
+      const damped = Math.pow(distance, 0.8);
+      y.set(damped > 150 ? 150 : damped);
+    }
+  };
 
-    if (info.offset.y > PULL_DISTANCE && !refreshing) {
+  const handleTouchEnd = () => {
+    if (y.get() > PULL_THRESHOLD && !refreshing) {
       setRefreshing(true);
 
-      // Simulate refresh
-      setTimeout(() => setRefreshing(false), 1000);
+      setTimeout(() => {
+        setRefreshing(false);
+        // Force re-render of content with new key to trigger animations
+        setRefreshKey((prev) => prev + 1);
+        animate(y, 0, { type: "spring", stiffness: 400, damping: 25 });
+      }, REFRESH_DURATION);
+    } else {
+      animate(y, 0, { type: "spring", stiffness: 400, damping: 25 });
     }
 
-    // Snap back
-    animate(y, 0, { type: "spring", stiffness: 300, damping: 30 });
+    setTouchStart(0);
   };
 
   return (
     <div
-      ref={homeRef}
       className="home"
-      onScroll={handleScroll}
+      ref={scrollRef}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
     >
-      {/* Pull-to-refresh indicator wrapper */}
-      <motion.div
-        style={{ y }}
-        drag={canPull ? "y" : false}
-        dragConstraints={{ top: 0, bottom: 120 }}
-        dragElastic={0.35}
-        onDragEnd={handleDragEnd}
-      >
-        {refreshing && (
-          <div className="refresh-indicator">
-            <ClipLoader size={20} color="#fff" />
-            <span>Refreshing...</span>
-          </div>
-        )}
+      {/* Pull-to-refresh indicator */}
+      <motion.div className="refresh-indicator" style={{ height: y }}>
+        <ClipLoader size={20} color="#fff" />
+        <span style={{ marginLeft: "8px" }}>
+          {refreshing ? "Refreshing..." : "Pull to refresh"}
+        </span>
       </motion.div>
 
-      {/* Scrollable content */}
-      <h1 className="home-title">Mariaflix</h1>
-      <HeroBanner />
-      <GenreChips />
+      {/* Content with motion animation on refresh */}
+      <motion.div
+        key={refreshKey} // changing key triggers re-animation
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ type: "spring", stiffness: 200, damping: 20, mass: 0.5 }}
+      >
+        <h1 className="home-title">Mariaflix</h1>
+        <HeroBanner />
+        <GenreChips />
 
-      <MovieRow
-        key={`cw-${refreshing}`}
-        title="Continue Watching"
-        showProgress
-        movies={continueWatching}
-      />
-      <MovieRow
-        key={`rec-${refreshing}`}
-        title="Recommended"
-        movies={recommended}
-      />
-      <MovieRow
-        key={`tr-${refreshing}`}
-        title="Trending"
-        movies={trending}
-      />
-      <MovieRow
-        key={`nr-${refreshing}`}
-        title="New Releases"
-        movies={newReleases}
-      />
+        <MovieRow key="cw" title="Continue Watching" showProgress movies={continueWatching} />
+        <MovieRow key="rec" title="Recommended" movies={recommended} />
+        <MovieRow key="tr" title="Trending" movies={trending} />
+        <MovieRow key="nr" title="New Releases" movies={newReleases} />
+      </motion.div>
     </div>
   );
 }
