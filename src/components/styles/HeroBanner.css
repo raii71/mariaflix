@@ -61,11 +61,9 @@
 
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
 
-  /* Smooth color transition */
   transition: background 0.3s ease, color 0.3s ease;
 }
 
-/* Optional hover effect */
 .hero-banner-play:hover {
   transform: scale(1.1);
   transition: transform 0.2s ease, background 0.3s ease, color 0.3s ease;

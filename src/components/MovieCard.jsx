@@ -8,19 +8,36 @@ export default function MovieCard({ poster, progress }) {
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       whileHover={{ scale: 1.08 }}
-      transition={{ type: "spring", stiffness: 200, damping: 20, mass: 0.5 }}
-      style={{ borderRadius: 6, overflow: "hidden" }}
+      whileTap={{ scale: 0.96 }}
+      transition={{
+        type: "spring",
+        stiffness: 260,
+        damping: 20,
+      }}
+      style={{
+        borderRadius: 6,
+        overflow: "hidden",
+        cursor: "pointer",
+      }}
     >
       <img
         src={poster}
         alt="movie"
-        style={{ display: "block", width: "100%", height: "auto" }}
+        style={{
+          display: "block",
+          width: "100%",
+          height: "auto",
+          pointerEvents: "none",
+        }}
         draggable={false}
       />
 
       {progress !== undefined && (
         <div className="progress-bar">
-          <div className="progress" style={{ width: `${progress}%` }} />
+          <div
+            className="progress"
+            style={{ width: `${progress}%` }}
+          />
         </div>
       )}
     </motion.div>

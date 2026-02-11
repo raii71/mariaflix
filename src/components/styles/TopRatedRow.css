@@ -1,0 +1,66 @@
+@font-face {
+    font-family: 'Asset';
+    src: url('../assets/fonts/Asset.ttf') format('truetype');
+}
+
+.top-rated-row {
+  margin: 20px 0;
+  padding-left: 16px;
+}
+
+.row-title {
+  font-weight: bold;
+  color: white;
+  margin-bottom: 16px;
+}
+
+.top-rated-scroll {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  gap: 90px;
+  padding-left: 70px;
+  scrollbar-width: none;
+}
+
+.top-rated-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.top-rated-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+}
+
+.rank-number {
+  font-family: 'Asset', sans-serif;
+  font-size: 220px;
+  font-weight: bold;
+  font-weight: 1000;
+  color: white;
+  opacity: 0.15;
+  position: absolute;
+  left: -75px;
+  bottom: -10px;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.poster {
+  height: 200px;
+  aspect-ratio: 4 / 3;
+  border-radius: 6px;
+  object-fit: cover;
+  object-position: center;
+  z-index: 1;
+  flex-shrink: 0;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  margin-left: 30px;
+}

@@ -1,5 +1,5 @@
 import MovieCard from "../components/MovieCard";
-import MovieRow from "../components/MovieRow"; // reuse
+import MovieRow from "../components/MovieRow";
 import "./styles/Library.css";
 
 import poster1 from "../assets/posters/Roane_And_The_Beast_2.png";
@@ -29,12 +29,10 @@ export default function Library() {
 
   return (
     <div className="library-page">
-      {/* Move title slightly higher */}
       <h1 className="library-title" style={{ marginTop: "8px" }}>
         My Library
       </h1>
 
-      {/* Continue Watching with slight left offset */}
       <div style={{ marginLeft: "-12px" }}>
         <MovieRow
           title="Continue Watching"
@@ -43,17 +41,14 @@ export default function Library() {
         />
       </div>
 
-      {/* My List */}
       <div style={{ marginLeft: "-12px" }}>
         <MovieRow title="My List" movies={myList} />
       </div>
 
-      {/* Downloads */}
       <div style={{ marginLeft: "-12px" }}>
         <MovieRow title="Downloaded" movies={downloads} />
       </div>
 
-      {/* Watch History */}
       <div style={{ marginLeft: "-12px" }}>
         <MovieRow title="Watch History" movies={history} />
       </div>
@@ -61,7 +56,6 @@ export default function Library() {
   );
 }
 
-/* Reusable Section Component for other rows */
 function Section({ title, movies }) {
   if (movies.length === 0) return null;
 

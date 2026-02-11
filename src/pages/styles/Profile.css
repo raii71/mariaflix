@@ -1,68 +1,158 @@
 .profile-page {
-  padding: 20px 16px 80px;
+  padding: 24px 18px 100px;
+  background: #111;
+  color: white;
   min-height: 100vh;
-  color: #fff;
-  box-sizing: border-box;
 }
 
-/* User Info */
-.profile-info {
+.profile-header {
   display: flex;
   align-items: center;
-  gap: 16px;
-  margin-bottom: 20px;
+  gap: 18px;
+  margin-bottom: 28px;
 }
 
 .avatar {
-  font-size: 60px !important;
+  font-size: 72px !important;
   color: #888;
+  flex-shrink: 0;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .user-details h2 {
   margin: 0;
-  font-size: 22px;
+  font-size: 20px;
 }
 
 .user-details p {
   margin: 2px 0;
-  font-size: 14px;
+  font-size: 13px;
   color: #aaa;
 }
 
-.user-details .subscription {
-  font-weight: 500;
+.subscription-badge {
+  margin-top: 8px;
+  font-size: 12px;
+  background: rgba(229, 9, 20, 0.15);
   color: #e50914;
+  padding: 4px 12px;
+  border-radius: 20px;
+  width: fit-content;
 }
 
-/* Settings */
-.profile-settings {
-  margin-bottom: 2px;
-}
-
-.profile-settings h3 {
-  font-size: 16px;
-  margin-bottom: 8px;
-  font-weight: 600;
-}
-
-.settings-btn {
-  display: block;
-  width: 100%;
-  padding: 10px 12px;
-  margin-bottom: 8px;
+.profile-stats {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
   background: #1c1c1c;
-  color: #fff;
+  padding: 18px;
+  border-radius: 14px;
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.profile-stats div {
+  flex: 1;
+}
+
+.profile-stats h4 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.profile-stats span {
+  font-size: 12px;
+  color: #aaa;
+}
+
+.profile-section {
+  margin-bottom: 28px;
+}
+
+.profile-section h3 {
+  font-size: 13px;
+  color: #888;
+  margin-bottom: 12px;
+  padding-left: 4px;
+}
+
+.profile-btn {
+  width: 100%;
+  background: #1c1c1c;
   border: none;
-  border-radius: 6px;
-  text-align: left;
+  padding: 15px 16px;
+  border-radius: 12px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
   cursor: pointer;
-  transition: background 0.2s;
 }
 
-.settings-btn:hover {
-  background: #2a2a2a;
+.btn-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-.settings-btn.logout {
-  color: #e50914;
+.profile-btn:hover {
+  background: #262626;
+}
+
+.profile-btn.danger {
+  color: #ff4d4d;
+}
+
+.profile-toggle {
+  background: #1c1c1c;
+  padding: 15px 16px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.toggle-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.toggle-switch {
+  width: 42px;
+  height: 22px;
+  background: #555;
+  border-radius: 12px;
+  position: relative;
+}
+
+.toggle-switch.on {
+  background: #e50914;
+}
+
+.toggle-switch.off {
+  background: #555;
+}
+
+.toggle-thumb {
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+}
+
+.toggle-switch.on .toggle-thumb {
+  left: 22px;
 }

@@ -39,7 +39,6 @@ export default function Search() {
 
   const trending = movies.slice(0, 5);
 
-  // Save recent search
   const handleSearchSubmit = (title) => {
     if (!title.trim()) return;
 
@@ -70,7 +69,6 @@ export default function Search() {
 
   return (
     <div className="search-page">
-      {/* Search Bar */}
       <div className={`search-bar ${active ? "active" : ""}`}>
         <input
           type="text"
@@ -84,7 +82,6 @@ export default function Search() {
           className={`search-icon ${active ? "active" : ""}`}
         />
 
-        {/* Smart Suggestions */}
         <AnimatePresence>
           {active && query.length > 0 && (
             <motion.div
@@ -110,27 +107,41 @@ export default function Search() {
         </AnimatePresence>
       </div>
 
-      {/* Genre Filter Chips */}
-      <div style={{ marginLeft: "-8px" }}>
+      <div style={{ marginLeft: "-12px" }}>
         <GenreChips
           selected={selectedGenre}
           onSelect={(genre) => setSelectedGenre(genre)}
         />
       </div>
 
-      {/* When query empty → show trending + recent */}
       {query === "" ? (
         <>
           {recentSearches.length > 0 && (
             <div className="recent-section">
-              <h3>Recent Searches</h3>
+              <h3 style={{ marginBottom: "4px" }}>Recent Searches</h3>
+
               {recentSearches.map((item, idx) => (
                 <div
                   key={idx}
                   className="recent-item"
                   onClick={() => setQuery(item)}
                 >
-                  {item}
+                  <span>{item}</span>
+
+                  <span
+                    className="remove-recent"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      const updated = recentSearches.filter((r) => r !== item);
+                      setRecentSearches(updated);
+                      localStorage.setItem(
+                        "recentSearches",
+                        JSON.stringify(updated)
+                      );
+                    }}
+                  >
+                    ✕
+                  </span>
                 </div>
               ))}
             </div>
@@ -140,7 +151,14 @@ export default function Search() {
             <h3>🔥 Trending</h3>
             <div className="search-results">
               {trending.map((movie) => (
-                <MovieCard key={movie.id} poster={movie.poster} />
+                <motion.div
+                  key={movie.id}
+                  whileHover={{ scale: 1.08 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <MovieCard poster={movie.poster} />
+                </motion.div>
               ))}
             </div>
           </div>
@@ -155,7 +173,14 @@ export default function Search() {
         >
           {filteredMovies.length > 0 ? (
             filteredMovies.map((movie) => (
-              <MovieCard key={movie.id} poster={movie.poster} />
+              <motion.div
+                key={movie.id}
+                whileHover={{ scale: 1.08 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                <MovieCard poster={movie.poster} />
+              </motion.div>
             ))
           ) : (
             <p className="no-results">No movies found.</p>

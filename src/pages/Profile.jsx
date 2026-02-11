@@ -1,70 +1,103 @@
 import { useState } from "react";
-import MovieRow from "../components/MovieRow";
-import MovieCard from "../components/MovieCard";
-import GenreChips from "../components/GenreChips";
+import { motion } from "framer-motion";
 import AvatarIcon from "@mui/icons-material/AccountCircle";
+import EditIcon from "@mui/icons-material/Edit";
+import LockIcon from "@mui/icons-material/Lock";
+import LogoutIcon from "@mui/icons-material/Logout";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import LanguageIcon from "@mui/icons-material/Language";
 import "./styles/Profile.css";
 
-import poster1 from "../assets/posters/Roane_And_The_Beast_2.png";
-import poster2 from "../assets/posters/A_Moment_To_Maria.png";
-import poster3 from "../assets/posters/Shark_Attack.png";
-import poster4 from "../assets/posters/Finding_Roane.png";
-
 export default function Profile() {
-  // User data
-  const [user, setUser] = useState({
+  const [notifications, setNotifications] = useState(true);
+
+  const user = {
     name: "Maria Sayre",
     email: "maria.sayre67@gmail.com",
     subscription: "Premium",
-  });
-
-  const [selectedGenre, setSelectedGenre] = useState("All");
-
-  const continueWatching = [
-    { id: 1, poster: poster1, progress: 30 },
-    { id: 2, poster: poster2, progress: 60 },
-  ];
-
-  const myList = [
-    { id: 3, poster: poster3 },
-    { id: 4, poster: poster4 },
-  ];
-
-  const downloads = [
-    { id: 5, poster: poster1 },
-  ];
-
-  const history = [
-    { id: 6, poster: poster2 },
-    { id: 7, poster: poster3 },
-  ];
+    planExpires: "Feb. 14, 2026",
+    watchTime: "124 hrs",
+    favorites: 2,
+  };
 
   return (
     <div className="profile-page">
-      {/* User Info Section */}
-      <div className="profile-info">
-        <AvatarIcon className="avatar" fontSize="large" />
+      <motion.div
+        className="profile-header"
+        initial={{ opacity: 0, y: -15 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
+        <AvatarIcon className="avatar" />
         <div className="user-details">
           <h2>{user.name}</h2>
           <p>{user.email}</p>
-          <p className="subscription">Subscription: {user.subscription}</p>
+
+          <div className="subscription-badge">
+            {user.subscription} • Expires {user.planExpires}
+          </div>
+        </div>
+      </motion.div>
+
+      <div className="profile-stats">
+        <div>
+          <h4>{user.watchTime}</h4>
+          <span>Watch Time</span>
+        </div>
+        <div>
+          <h4>{user.favorites}</h4>
+          <span>Favorites</span>
         </div>
       </div>
 
-      {/* Profile Settings */}
-      <div className="profile-settings">
-        <h3 style={{ marginBottom: "12px" }}>Settings</h3>
-        <button className="settings-btn">Edit Profile</button>
-        <button className="settings-btn">Change Password</button>
-        <button className="settings-btn logout">Logout</button>
+      <div className="profile-section">
+        <h3>Account</h3>
+
+        <ProfileButton icon={<EditIcon />} label="Edit Profile" />
+        <ProfileButton icon={<LockIcon />} label="Change Password" />
       </div>
 
-      {/* Extra Personal Options */}
-      <div className="profile-extra">
+      <div className="profile-section">
         <h3>Preferences</h3>
-        <button className="settings-btn">Notifications</button>
-        <button className="settings-btn">Language</button>
+
+        <div
+          className="profile-toggle"
+          onClick={() => setNotifications(!notifications)}
+        >
+          <div className="toggle-left">
+            <NotificationsIcon />
+            <span>Notifications</span>
+          </div>
+
+          <motion.div
+            className={`toggle-switch ${notifications ? "on" : "off"}`}
+            layout
+            transition={{ type: "spring", stiffness: 400, damping: 25 }}
+          >
+            <motion.div className="toggle-thumb" layout />
+          </motion.div>
+        </div>
+
+        <ProfileButton icon={<LanguageIcon />} label="Language" />
+      </div>
+
+      <div className="profile-section">
+        <ProfileButton icon={<LogoutIcon />} label="Logout" danger />
       </div>
     </div>
+  );
+}
+
+function ProfileButton({ icon, label, danger }) {
+  return (
+    <motion.button
+      whileTap={{ scale: 0.97 }}
+      whileHover={{ scale: 1.02 }}
+      className={`profile-btn ${danger ? "danger" : ""}`}
+    >
+      <span className="btn-left">
+        {icon}
+        {label}
+      </span>
+    </motion.button>
   );
 }

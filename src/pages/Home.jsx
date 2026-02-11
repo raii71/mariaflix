@@ -4,6 +4,7 @@ import { ClipLoader } from "react-spinners";
 
 import HeroBanner from "../components/HeroBanner";
 import GenreChips from "../components/GenreChips";
+import TopRatedRow from "../components/TopRatedRow";
 import MovieRow from "../components/MovieRow";
 import "./styles/Home.css";
 
@@ -20,16 +21,15 @@ import poster10 from "../assets/posters/Finding_Roane.png";
 
 export default function Home() {
   const scrollRef = useRef(null);
-  const y = useMotionValue(0); // vertical motion for pull indicator
+  const y = useMotionValue(0);
   const [refreshing, setRefreshing] = useState(false);
   const [touchStart, setTouchStart] = useState(0);
-  const [refreshKey, setRefreshKey] = useState(0); // key to trigger animation
+  const [refreshKey, setRefreshKey] = useState(0);
 
-const PULL_THRESHOLD = 15 // as % of dynamic viewport height
-const pullThresholdPx = (PULL_THRESHOLD / 100) * window.innerHeight;  
-  const REFRESH_DURATION = 1500; // ms
+  const PULL_THRESHOLD = 15;
+  const pullThresholdPx = (PULL_THRESHOLD / 100) * window.innerHeight;
+  const REFRESH_DURATION = 1500;
 
-  // Hard-coded movies
   const continueWatching = [
     { id: "cw-1", poster: poster1, progress: 30 },
     { id: "cw-2", poster: poster2, progress: 60 },
@@ -53,8 +53,14 @@ const pullThresholdPx = (PULL_THRESHOLD / 100) * window.innerHeight;
     { id: "nr-3", poster: poster10 },
     { id: "nr-4", poster: poster4 },
   ];
+  const topRated = [
+    { id: "trt-1", poster: poster5 },
+    { id: "trt-2", poster: poster1 },
+    { id: "trt-3", poster: poster7 },
+    { id: "trt-4", poster: poster2 },
+    { id: "trt-5", poster: poster6 },
+  ];
 
-  // Touch handlers
   const handleTouchStart = (e) => {
     if (scrollRef.current.scrollTop === 0 && !refreshing) {
       setTouchStart(e.touches[0].clientY);
@@ -77,7 +83,6 @@ const pullThresholdPx = (PULL_THRESHOLD / 100) * window.innerHeight;
 
       setTimeout(() => {
         setRefreshing(false);
-        // Force re-render of content with new key to trigger animations
         setRefreshKey((prev) => prev + 1);
         animate(y, 0, { type: "spring", stiffness: 400, damping: 25 });
       }, REFRESH_DURATION);
@@ -96,7 +101,6 @@ const pullThresholdPx = (PULL_THRESHOLD / 100) * window.innerHeight;
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
-      {/* Pull-to-refresh indicator */}
       <motion.div className="refresh-indicator" style={{ height: y }}>
         <ClipLoader size={20} color="#fff" />
         <span style={{ marginLeft: "8px" }}>
@@ -104,9 +108,8 @@ const pullThresholdPx = (PULL_THRESHOLD / 100) * window.innerHeight;
         </span>
       </motion.div>
 
-      {/* Content with motion animation on refresh */}
       <motion.div
-        key={refreshKey} // changing key triggers re-animation
+        key={refreshKey}
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ type: "spring", stiffness: 200, damping: 20, mass: 0.5 }}
@@ -115,7 +118,14 @@ const pullThresholdPx = (PULL_THRESHOLD / 100) * window.innerHeight;
         <HeroBanner />
         <GenreChips />
 
-        <MovieRow key="cw" title="Continue Watching" showProgress movies={continueWatching} />
+        <TopRatedRow movies={topRated} />
+
+        <MovieRow
+          key="cw"
+          title="Continue Watching"
+          showProgress
+          movies={continueWatching}
+        />
         <MovieRow key="rec" title="Recommended" movies={recommended} />
         <MovieRow key="tr" title="Trending" movies={trending} />
         <MovieRow key="nr" title="New Releases" movies={newReleases} />

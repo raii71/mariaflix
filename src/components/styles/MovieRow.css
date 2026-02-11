@@ -7,7 +7,7 @@
   gap: 10px;
   overflow-x: hidden;
   width: max-content;
-  /* Prevent shrinking and keep 3 cards visible */
+
   justify-content: flex-start;
   align-items: flex-end;
 }

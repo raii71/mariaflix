@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import "./styles/HeroBanner.css";
 
@@ -10,9 +11,8 @@ import poster3 from "../assets/posters/It_Ends_With_Roane.png";
 export default function HeroBanner() {
   const posters = [poster1, poster2, poster3];
   const [index, setIndex] = useState(0);
-  const [active, setActive] = useState(false); // for play button toggle
+  const [active, setActive] = useState(false);
 
-  // Automatic carousel
   useEffect(() => {
     const timer = setTimeout(() => {
       setIndex((prev) => (prev + 1) % posters.length);
@@ -20,8 +20,13 @@ export default function HeroBanner() {
     return () => clearTimeout(timer);
   }, [index]);
 
-  const togglePlay = () => setActive((prev) => !prev);
+  const navigate = useNavigate();
 
+  const togglePlay = () => {
+    setActive((prev) => !prev);
+    navigate("/moviepage");
+  };
+  
   return (
     <div className="hero-banner">
       <AnimatePresence mode="sync">

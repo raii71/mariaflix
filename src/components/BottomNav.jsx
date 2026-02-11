@@ -8,19 +8,22 @@ import PersonIcon from '@mui/icons-material/Person';
 export default function BottomNav() {
   return (
     <nav className="bottom-nav">
-      <NavLink to="/">
+      <NavLink to="/home" className={({ isActive }) => (isActive ? "active" : "")}>
         <HomeIcon />
         <span>Home</span>
       </NavLink>
-      <NavLink to="/search">
+
+      <NavLink to="/search" className={({ isActive }) => (isActive ? "active" : "")}>
         <SearchIcon />
         <span>Search</span>
       </NavLink>
-      <NavLink to="/library">
+
+      <NavLink to="/library" className={({ isActive }) => (isActive ? "active" : "")}>
         <VideoLibraryIcon />
         <span>Library</span>
       </NavLink>
-      <NavLink to="/profile">
+
+      <NavLink to="/profile" className={({ isActive }) => (isActive ? "active" : "")}>
         <PersonIcon />
         <span>Profile</span>
       </NavLink>
