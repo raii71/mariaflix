@@ -6,6 +6,8 @@ import HeroBanner from "../components/HeroBanner";
 import GenreChips from "../components/GenreChips";
 import MovieRow from "../components/MovieRow";
 
+import from "/styles/Home.css":
+
 const PULL_DISTANCE = 100;
 
 export default function Home({
