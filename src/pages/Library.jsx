@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import MovieCard from "../components/MovieCard";
 import MovieRow from "../components/MovieRow";
 import "./styles/Library.css";
@@ -27,46 +28,80 @@ export default function Library() {
     { id: 7, poster: poster3 },
   ];
 
+  // Helper for staggered animation
+  const sectionVariant = (index) => ({
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    transition: { delay: index * 0.1, type: "spring", stiffness: 200, damping: 20 },
+  });
+
   return (
     <div className="library-page">
-      <h1 className="library-title" style={{ marginTop: "8px" }}>
+      {/* Page title */}
+      <motion.h1
+        className="library-title"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.05, type: "spring", stiffness: 200 }}
+        style={{ marginTop: "8px" }}
+      >
         My Library
-      </h1>
+      </motion.h1>
 
-      <div style={{ marginLeft: "-12px" }}>
+      {/* Sections */}
+      <motion.div style={{ marginLeft: "-12px" }} {...sectionVariant(0)}>
         <MovieRow
           title="Continue Watching"
           movies={continueWatching}
           showProgress
         />
-      </div>
+      </motion.div>
 
-      <div style={{ marginLeft: "-12px" }}>
+      <motion.div style={{ marginLeft: "-12px" }} {...sectionVariant(1)}>
         <MovieRow title="My List" movies={myList} />
-      </div>
+      </motion.div>
 
-      <div style={{ marginLeft: "-12px" }}>
+      <motion.div style={{ marginLeft: "-12px" }} {...sectionVariant(2)}>
         <MovieRow title="Downloaded" movies={downloads} />
-      </div>
+      </motion.div>
 
-      <div style={{ marginLeft: "-12px" }}>
+      <motion.div style={{ marginLeft: "-12px" }} {...sectionVariant(3)}>
         <MovieRow title="Watch History" movies={history} />
-      </div>
+      </motion.div>
     </div>
   );
 }
 
-function Section({ title, movies }) {
+// Optional: animated section for individual MovieCards
+export function Section({ title, movies, delayIndex = 0 }) {
   if (movies.length === 0) return null;
 
   return (
-    <div className="library-section">
-      <h3>{title}</h3>
+    <motion.div
+      className="library-section"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: delayIndex * 0.1, type: "spring", stiffness: 200, damping: 20 }}
+    >
+      <motion.h3
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.05 + delayIndex * 0.1, type: "spring", stiffness: 200 }}
+      >
+        {title}
+      </motion.h3>
       <div className="library-row">
-        {movies.map((movie) => (
-          <MovieCard key={movie.id} poster={movie.poster} />
+        {movies.map((movie, index) => (
+          <motion.div
+            key={movie.id}
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 + index * 0.05, type: "spring", stiffness: 200, damping: 20 }}
+          >
+            <MovieCard poster={movie.poster} />
+          </motion.div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 }

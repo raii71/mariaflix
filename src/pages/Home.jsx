@@ -93,6 +93,13 @@ export default function Home() {
     setTouchStart(0);
   };
 
+  // ✅ Helper for staggered title animation
+  const titleVariant = (index) => ({
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    transition: { delay: 0.1 + index * 0.1, type: "spring", stiffness: 200, damping: 20 },
+  });
+
   return (
     <div
       className="home"
@@ -110,25 +117,51 @@ export default function Home() {
 
       <motion.div
         key={refreshKey}
-        initial={{ opacity: 0, scale: 0.9 }}
+        initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ type: "spring", stiffness: 200, damping: 20, mass: 0.5 }}
       >
-        <h1 className="home-title">Mariaflix</h1>
+        <motion.h1
+          className="home-title"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1, type: "spring", stiffness: 200 }}
+        >
+          Mariaflix
+        </motion.h1>
+
         <HeroBanner />
         <GenreChips />
 
-        <TopRatedRow movies={topRated} />
+        {/* Top Rated */}
+        <motion.div {...titleVariant(0)}>
+          <TopRatedRow movies={topRated} />
+        </motion.div>
 
-        <MovieRow
-          key="cw"
-          title="Continue Watching"
-          showProgress
-          movies={continueWatching}
-        />
-        <MovieRow key="rec" title="Recommended" movies={recommended} />
-        <MovieRow key="tr" title="Trending" movies={trending} />
-        <MovieRow key="nr" title="New Releases" movies={newReleases} />
+        {/* Continue Watching */}
+        <motion.div {...titleVariant(1)}>
+          <MovieRow
+            key="cw"
+            title="Continue Watching"
+            showProgress
+            movies={continueWatching}
+          />
+        </motion.div>
+
+        {/* Recommended */}
+        <motion.div {...titleVariant(2)}>
+          <MovieRow key="rec" title="Recommended" movies={recommended} />
+        </motion.div>
+
+        {/* Trending */}
+        <motion.div {...titleVariant(3)}>
+          <MovieRow key="tr" title="Trending" movies={trending} />
+        </motion.div>
+
+        {/* New Releases */}
+        <motion.div {...titleVariant(4)}>
+          <MovieRow key="nr" title="New Releases" movies={newReleases} />
+        </motion.div>
       </motion.div>
     </div>
   );

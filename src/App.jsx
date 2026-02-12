@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import MoviePage from "./pages/MoviePage";
+import CastPage from "./pages/CastPage";
 import Search from "./pages/Search";
 import Library from "./pages/Library";
 import Profile from "./pages/Profile";
@@ -16,6 +17,7 @@ export default function App() {
 
           <Route path="/home" element={<Home />} />
           <Route path="/moviepage" element={<MoviePage />} />
+          <Route path="/cast/:name" element={<CastPage />} />
           <Route path="/search" element={<Search />} />
           <Route path="/library" element={<Library />} />
           <Route path="/profile" element={<Profile />} />

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import MovieCard from "../components/MovieCard";
 import GenreChips from "../components/GenreChips";
@@ -53,10 +53,8 @@ export default function Search() {
     const matchesQuery = movie.title
       .toLowerCase()
       .includes(query.toLowerCase());
-
     const matchesGenre =
       selectedGenre === "All" || movie.genre === selectedGenre;
-
     return matchesQuery && matchesGenre;
   });
 
@@ -66,6 +64,13 @@ export default function Search() {
           movie.title.toLowerCase().includes(query.toLowerCase())
         )
       : [];
+
+  // Helper for staggered animation of items
+  const itemVariant = (index) => ({
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    transition: { delay: 0.1 + index * 0.1, type: "spring", stiffness: 200, damping: 20 },
+  });
 
   return (
     <div className="search-page">
@@ -78,9 +83,7 @@ export default function Search() {
           onFocus={() => setActive(true)}
           onBlur={() => setTimeout(() => setActive(false), 200)}
         />
-        <SearchIcon
-          className={`search-icon ${active ? "active" : ""}`}
-        />
+        <SearchIcon className={`search-icon ${active ? "active" : ""}`} />
 
         <AnimatePresence>
           {active && query.length > 0 && (
@@ -90,9 +93,12 @@ export default function Search() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
             >
-              {suggestions.slice(0, 5).map((movie) => (
-                <div
+              {suggestions.slice(0, 5).map((movie, idx) => (
+                <motion.div
                   key={movie.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.05 + idx * 0.05 }}
                   className="suggestion-item"
                   onClick={() => {
                     setQuery(movie.title);
@@ -100,7 +106,7 @@ export default function Search() {
                   }}
                 >
                   {movie.title}
-                </div>
+                </motion.div>
               ))}
             </motion.div>
           )}
@@ -117,13 +123,28 @@ export default function Search() {
       {query === "" ? (
         <>
           {recentSearches.length > 0 && (
-            <div className="recent-section">
-              <h3 style={{ marginBottom: "4px" }}>Recent Searches</h3>
+            <motion.div
+              className="recent-section"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1, type: "spring", stiffness: 200 }}
+            >
+              <motion.h3
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.15 }}
+                style={{ marginBottom: "4px" }}
+              >
+                Recent Searches
+              </motion.h3>
 
               {recentSearches.map((item, idx) => (
-                <div
+                <motion.div
                   key={idx}
                   className="recent-item"
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.15 + idx * 0.05 }}
                   onClick={() => setQuery(item)}
                 >
                   <span>{item}</span>
@@ -142,26 +163,40 @@ export default function Search() {
                   >
                     ✕
                   </span>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           )}
 
-          <div className="trending-section">
-            <h3>🔥 Trending</h3>
+          <motion.div
+            className="trending-section"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+          >
+            <motion.h3
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.25 }}
+            >
+              🔥 Trending
+            </motion.h3>
+
             <div className="search-results">
-              {trending.map((movie) => (
+              {trending.map((movie, idx) => (
                 <motion.div
                   key={movie.id}
                   whileHover={{ scale: 1.08 }}
                   whileTap={{ scale: 0.95 }}
-                  transition={{ type: "spring", stiffness: 300 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 + idx * 0.05, type: "spring", stiffness: 200, damping: 20 }}
                 >
                   <MovieCard poster={movie.poster} />
                 </motion.div>
               ))}
             </div>
-          </div>
+          </motion.div>
         </>
       ) : (
         <motion.div
@@ -172,12 +207,14 @@ export default function Search() {
           className="search-results"
         >
           {filteredMovies.length > 0 ? (
-            filteredMovies.map((movie) => (
+            filteredMovies.map((movie, idx) => (
               <motion.div
                 key={movie.id}
                 whileHover={{ scale: 1.08 }}
                 whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 300 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.05 + idx * 0.05, type: "spring", stiffness: 200, damping: 20 }}
               >
                 <MovieCard poster={movie.poster} />
               </motion.div>

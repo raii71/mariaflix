@@ -22,46 +22,80 @@ export default function Profile() {
 
   return (
     <div className="profile-page">
+      {/* Header */}
       <motion.div
         className="profile-header"
-        initial={{ opacity: 0, y: -15 }}
+        initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
+        transition={{ type: "spring", stiffness: 200, damping: 20 }}
       >
         <AvatarIcon className="avatar" />
         <div className="user-details">
-          <h2>{user.name}</h2>
-          <p>{user.email}</p>
+          <motion.h2
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.05, type: "spring", stiffness: 200 }}
+          >
+            {user.name}
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: -5 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, type: "spring", stiffness: 200 }}
+          >
+            {user.email}
+          </motion.p>
 
-          <div className="subscription-badge">
+          <motion.div
+            className="subscription-badge"
+            initial={{ opacity: 0, y: -5 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.15, type: "spring", stiffness: 200 }}
+          >
             {user.subscription} • Expires {user.planExpires}
-          </div>
+          </motion.div>
         </div>
       </motion.div>
 
-      <div className="profile-stats">
-        <div>
+      {/* Stats */}
+      <motion.div
+        className="profile-stats"
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2, type: "spring", stiffness: 200, damping: 20 }}
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.25 }}
+        >
           <h4>{user.watchTime}</h4>
           <span>Watch Time</span>
-        </div>
-        <div>
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+        >
           <h4>{user.favorites}</h4>
           <span>Favorites</span>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
-      <div className="profile-section">
-        <h3>Account</h3>
-
+      {/* Account Section */}
+      <ProfileSection title="Account" delay={0.35}>
         <ProfileButton icon={<EditIcon />} label="Edit Profile" />
         <ProfileButton icon={<LockIcon />} label="Change Password" />
-      </div>
+      </ProfileSection>
 
-      <div className="profile-section">
-        <h3>Preferences</h3>
-
-        <div
+      {/* Preferences Section */}
+      <ProfileSection title="Preferences" delay={0.45}>
+        <motion.div
           className="profile-toggle"
           onClick={() => setNotifications(!notifications)}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.45, type: "spring", stiffness: 200, damping: 20 }}
         >
           <div className="toggle-left">
             <NotificationsIcon />
@@ -75,24 +109,44 @@ export default function Profile() {
           >
             <motion.div className="toggle-thumb" layout />
           </motion.div>
-        </div>
+        </motion.div>
 
         <ProfileButton icon={<LanguageIcon />} label="Language" />
-      </div>
+      </ProfileSection>
 
-      <div className="profile-section">
+      {/* Logout Section */}
+      <ProfileSection title="" delay={0.55}>
         <ProfileButton icon={<LogoutIcon />} label="Logout" danger />
-      </div>
+      </ProfileSection>
     </div>
   );
 }
 
+// Animated section wrapper
+function ProfileSection({ title, delay = 0, children }) {
+  return (
+    <motion.div
+      className="profile-section"
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay, type: "spring", stiffness: 200, damping: 20 }}
+    >
+      {title && <motion.h3 initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: delay + 0.05 }}>{title}</motion.h3>}
+      {children}
+    </motion.div>
+  );
+}
+
+// Animated buttons
 function ProfileButton({ icon, label, danger }) {
   return (
     <motion.button
       whileTap={{ scale: 0.97 }}
       whileHover={{ scale: 1.02 }}
       className={`profile-btn ${danger ? "danger" : ""}`}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.1, type: "spring", stiffness: 200, damping: 20 }}
     >
       <span className="btn-left">
         {icon}

@@ -134,7 +134,7 @@
   gap: 20px;
   overflow-x: auto;
   scrollbar-width: none;
-  padding-top: 10px;
+  padding: 10px 0;
 }
 
 .cast-list::-webkit-scrollbar {
@@ -152,6 +152,7 @@
 }
 
 .cast-card p {
+  margin: 8px 0;
   font-size: 0.85rem;
   word-break: break-word;
 }
@@ -165,14 +166,12 @@
   font-size: 1.5rem;
 }
 
-/* Tags */
 .movie-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   justify-content: flex-start;
-  margin-top: 20px;
-  margin-bottom: 40px;
+  margin: 20px 0;
 }
 
 .tag {
@@ -180,4 +179,25 @@
   padding: 5px 10px;
   border-radius: 20px;
   font-size: 0.85rem;
+}
+
+.more-like-this {
+  margin: 0 0 0 -16px;
+}
+
+.more-like-this h2 {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 12px 0;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}
+
+.more-like-this::before {
+  content: "";
+  display: block;
+  width: 80%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 0 auto 16px auto;
 }
