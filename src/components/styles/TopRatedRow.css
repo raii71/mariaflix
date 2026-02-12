@@ -11,6 +11,7 @@
 .row-title {
   font-weight: bold;
   color: white;
+  margin-top: -8px;
   margin-bottom: 16px;
 }
 

@@ -3,6 +3,7 @@
   padding: 20px;
   font-family: 'Arial', sans-serif;
   max-width: 1000px;
+  overflow-x: hidden;
   margin: 0 auto;
   position: relative;
 }

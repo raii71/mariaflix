@@ -1,44 +1,106 @@
+/* CastPage.css */
+
+/* Base page container */
 .cast-page {
-  padding: 40px;
-  color: white;
-  min-height: 100vh;
+  padding: 30px 20px; /* gentle vertical + horizontal spacing */
+  width: 100%;
+  box-sizing: border-box;
+  color: #fff; /* adjust depending on theme */
+  font-family: 'Roboto', sans-serif;
+  overflow-x: hidden;
 }
 
-.cast-hero {
+/* Back button */
+.back-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  margin-left: 10px;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+/* Actor Image / Hero */
+.actor-image {
+  display: flex;
+  justify-content: center;
+}
+
+.actor-image svg {
+  border-radius: 8px;
+  padding: 10px;
+}
+
+/* Name */
+.actor-name {
   text-align: center;
-  margin-top: 40px;
+  font-size: 42px;
+  font-weight: 700;
+  margin: 0;
 }
 
-.cast-hero h1 {
-  margin-top: 20px;
-  font-size: 36px;
-}
-
-.cast-role {
+/* Tagline */
+.actor-tagline {
+  text-align: center;
+  font-style: italic;
   opacity: 0.7;
-  margin-top: 8px;
+  margin: 8px 0;
+  font-size: 18px;
 }
 
-.cast-bio {
-  margin-top: 50px;
-  max-width: 800px;
+/* Profession */
+.actor-profession {
+  text-align: center;
+  font-weight: 500;
+  letter-spacing: 1px;
+  margin-bottom: 25px; /* reduced spacing a bit */
+  font-size: 16px;
 }
 
-.cast-filmography {
-  margin-top: 40px;
+/* Actor Details */
+.actor-details {
+  max-width: 700px;
+  margin: 0 auto 40px auto; /* reduced bottom margin */
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* small spacing between rows */
 }
 
-.cast-filmography ul {
-  list-style: none;
-  padding: 0;
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 8px;
 }
 
-.cast-filmography li {
-  margin-bottom: 8px;
-  opacity: 0.8;
+.detail-row span {
+  font-size: 16px;
 }
 
-.cast-card-link {
-  text-decoration: none;
-  color: inherit;
+.label {
+  opacity: 0.6;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+/* Biography */
+.actor-biography {
+  max-width: 900px;
+  margin: 0 auto 50px auto; /* slightly reduced bottom margin */
+  line-height: 1.7;
+  font-size: 16px;
+}
+
+.actor-biography h2 {
+  font-size: 28px;
+  margin: -16px 0 8px;
+}
+
+.actor-biography p {
+  margin: 0;
+}
+
+/* Filmography MovieRow */
+.actor-filmography {
+  margin: -24px -16px;
 }
